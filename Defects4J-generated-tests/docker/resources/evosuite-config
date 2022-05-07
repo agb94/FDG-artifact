@@ -1,0 +1,1 @@
+-Dstopping_condition=MaxTime -Dshow_progress=false -Djunit_check=true -Dfilter_assertions=true -Dtest_comments=true -Dminimize_strings=false -Dmax_size=100 -Dminimize=true -Dmax_length_test_case=20 -mem 1500
