@@ -1,5 +1,7 @@
 # FDG: A Precise Measurement of Fault Diagnosability Gain of Test Cases
 
+[![DOI](https://zenodo.org/badge/489423364.svg)](https://zenodo.org/badge/latestdoi/489423364)
+
 This is an artifact accompanying the paper **FDG: A Precise Measurement of
 Fault Diagnosability Gain of Test Cases** (ISSTA 2022).
 
