@@ -9,10 +9,7 @@ ENV JAVA_VERSION_MAJOR=8 \
     JAVA_HOME=/usr/lib/jvm/default-jvm \
     PATH=${PATH}:/usr/lib/jvm/default-jvm/bin/
 
-ARG TARGETPLATFORM
-RUN case ${TARGETPLATFORM} in \
-         "linux/amd64")  ARCH=amd64  ;; \
-    esac
+ARG TARGETARCH
 
 RUN add-apt-repository ppa:openjdk-r/ppa -y && \
     # update data from repositories
@@ -24,7 +21,7 @@ RUN add-apt-repository ppa:openjdk-r/ppa -y && \
     # install application
     apt-get install -y --no-install-recommends openjdk-8-jdk && \
     # fix default setting
-    ln -s java-8-openjdk-${ARCH}  /usr/lib/jvm/default-jvm && \
+    ln -s java-8-openjdk-${TARGETARCH}  /usr/lib/jvm/default-jvm && \
     # remove apt cache from image
     apt-get clean all
 
