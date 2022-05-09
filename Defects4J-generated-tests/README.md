@@ -109,14 +109,6 @@ Example output (please note that the output can be different based on the random
 * selection metric: FDG:0.5
 * subject: Lang-1b
 * test suite: evosuite-newTS (/root/results/evosuite_test/newTS/Lang-1)
-* 1 buggy methods:
---- org.apache.commons.lang3.math.NumberUtils.createNumber(Ljava/lang/String;)
-* 1 failing tests
---- org.apache.commons.lang3.math.NumberUtilsTest::TestLang747
-[] []
-* 38 lines collected
-* 112 lines collected
-* 0/32 generated tests are failed in fixed version
                         value
 num_total_tests            33
 num_failing_tests           1
@@ -126,19 +118,19 @@ num_total_methods          14
 num_suspicious_methods      5
 num_buggy_methods           1
 ********************************************
-  Iter  Test                                                                                Fitness    Oracle   Response    Entropy    Momentum    Ranks
-------  --------------------------------------------------------------------------------  ---------  --------  ---------  ---------  ----------  -------
-     0  [('initial_test', 'org.apache.commons.lang3.math.NumberUtilsTest::TestLang747')]                                    1.60944                    5
-     1  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test27')                0.524161         1          1    1.59456         3          2
-     2  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test18')                0.526924         1          1    1.6044          0          2
-     3  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test19')                0.49969          1          1    1.60093         2          1
-     4  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test16')                0.533589         1          1    1.59332         0.5        1
-     5  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test23')                0.514621         1          1    1.5857          0          1
-     6  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test26')                0.504069         1          1    1.57733         0          1
-     7  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test24')                0.5004           1          1    1.56879         0          1
-     8  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test22')                0.497579         1          1    1.5603          0          1
-     9  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test21')                0.495339         1          1    1.55198         0          1
-    10  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test20')                0.493514         1          1    1.54388         0          1
+  Iter  Test                                                                                Fitness    Oracle    Response    Ranks
+------  --------------------------------------------------------------------------------  ---------  --------  ----------  -------
+     0  [('initial_test', 'org.apache.commons.lang3.math.NumberUtilsTest::TestLang747')]                                         5
+     1  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test27')                0.524161         1           1        2
+     2  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test18')                0.526924         1           1        2
+     3  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test19')                0.49969          1           1        1
+     4  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test16')                0.533589         1           1        1
+     5  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test23')                0.514621         1           1        1
+     6  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test26')                0.504069         1           1        1
+     7  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test24')                0.5004           1           1        1
+     8  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test22')                0.497579         1           1        1
+     9  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test21')                0.495339         1           1        1
+    10  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test20')                0.493514         1           1        1
 ```
 You can see that the rank of the faulty method becomes higher (5 -> 1) as more test cases are added. Using this artifact, you can generate those results that support our findings in RQ2.
 
@@ -146,8 +138,8 @@ You can see that the rank of the faulty method becomes higher (5 -> 1) as more t
 
 To answer RQ3, we showed how much SBFL performance changes based on the different labelling error rates (Figure 6).
 You can control the error rate (or noise probability) of the simulated human responses using the
-`--noise <prop>` option of the `main.py` script. It will randomly flip the test oracle querying response
-with a probability of `<prob>`. 
+`--noise <prop>` option of the `main.py` script. It will **randomly** flip the test oracle querying response
+with a probability of `<prob>` at each iteration. 
 
 ```shell
 # the noise probability is set to 0.3!
@@ -175,19 +167,19 @@ num_total_methods          14
 num_suspicious_methods      5
 num_buggy_methods           1
 ********************************************
-  Iter  Test                                                                                Fitness    Oracle   Response    Entropy    Momentum    Ranks
-------  --------------------------------------------------------------------------------  ---------  --------  ---------  ---------  ----------  -------
-     0  [('initial_test', 'org.apache.commons.lang3.math.NumberUtilsTest::TestLang747')]                                    1.60944                    5
-     1  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test27')                0.524161         1          0    2.18224    3.66667         4
-     2  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test22')                0.610181         1          1    2.17603    1               4
-     3  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test26')                0.565125         1          1    2.16842    1.33333         6
-     4  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test21')                0.557515         1          0    2.17024    2.75            4
-     5  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test12')                0.570087         1          1    2.16923    0.666667        4
-     6  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test20')                0.554509         1          1    2.17178    3               1
-     7  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test23')                0.546811         1          0    2.14738    0.8             1
-     8  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test24')                0.553293         1          1    2.1485     1.64286         1
-     9  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test14')                0.54706          1          1    2.1488     0               1
-    10  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test10')                0.541957         1          1    2.14849    0               1
+  Iter  Test                                                                                Fitness    Oracle    Response    Ranks
+------  --------------------------------------------------------------------------------  ---------  --------  ----------  -------
+     0  [('initial_test', 'org.apache.commons.lang3.math.NumberUtilsTest::TestLang747')]                                         5
+     1  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test27')                0.524161         1           0        4
+     2  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test22')                0.610181         1           0        4
+     3  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test21')                0.636902         1           0        4
+     4  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test26')                0.625367         1           1        4
+     5  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test12')                0.601704         1           1        1
+     6  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test20')                0.581225         1           1        1
+     7  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test23')                0.567799         1           0        1
+     8  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test24')                0.571513         1           1        1
+     9  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test17')                0.56482          1           1        1
+    10  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test14')                0.559519         1           1        1
 ```
 Now, the simulated human responses (`Response` column) are sometimes incorrect.
 For example, in Iter 1, it simulates a wrong response answering that `test27` captures the incorrect behaviour of the program `Lang-1b` (`Reponse: 0`), even though the test case `test27` does not reveal any incorrect behaviour of the program (`Oracle: 1`). You can see that the rank of faulty elements becomes `1` after adding more test cases compared to the previous example.
