@@ -292,7 +292,7 @@ def select(coverage_matrix, oracle_vector, buggy_methods,
 
     row = [
       i, selected_test if selected_test is not None else current_test_inputs,
-      selected_fitness, oracle, response, entropy, weighted_momentum, buggy_ranks
+      selected_fitness, oracle, response, buggy_ranks
     ]
     rows.append(row)
 
@@ -352,7 +352,7 @@ def select(coverage_matrix, oracle_vector, buggy_methods,
       print("oracle:", oracle)
       print("response:", response)
 
-  print(tabulate(rows, headers=["Iter", "Test", "Fitness", "Oracle", "Rsponse", "Entropy", "Momentum", "Ranks"]))
+  print(tabulate(rows, headers=["Iter", "Test", "Fitness", "Oracle", "Response", "Ranks"]))
   return tests, method_ranks
 
 if __name__ == "__main__":
