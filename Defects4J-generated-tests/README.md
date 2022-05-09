@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-- 🚨 **Please make sure that the docker daemon is running.** If not, you will encounter the error: `Cannot connect to the Docker daemon at unix:///var/run/docker.sock`
+- 🚨 **Please make sure that the docker daemon is running on your machine.** If not, you will encounter the error: `Cannot connect to the Docker daemon at unix:///var/run/docker.sock`
 - 🚨 Our docker image `agb94/fdg` only supports the  `linux/amd64` architecture. If the architecture of your processor is `arm64`, e.g. Apple sillicion, please try with another machine.
 
 ### **Step 0**. Are you busy now?
