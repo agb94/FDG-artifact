@@ -57,7 +57,7 @@ Go to **Step 3**.
 ### **Step 3**. Simulate Iterative FL
 The following command will simulate the iterative SBFL scenario for `<pid>-<vid>b` using the EvoSuite-generated test suite with the id `<test_suite_id>`. You can set the noise probability in oracle querying using the `--noise` option.
 ```bash
-docker exec fdg python3.6 main.py <pid> <vid> --tool evosuite --id <test_suite_id> --budget <query_budget> --selection <diagnosability_metric> --noise <noise_probability>
+docker exec fdg python3.6 main.py <pid> <vid> --tool evosuite --id <test_suite_id> --budget <query_budget(s)> --selection <FDG:alpha|Split|Cover|DDU|EntBug|Total|DDU|Add|RAPTER|TfD|FLINT|Prox|S3> --noise <noise_probability>
 # ex) docker exec fdg python3.6 main.py Lang 1 --tool evosuite --id newTS --budget 10 --selection FDG:0.5 --noise 0.0
 ```
 - The localisation results will be pickled and saved to `./results/localisation/<test_suite_id>/<pid>-<vid>-*`.
@@ -93,3 +93,117 @@ Go to **Step 5** after the simulation is done.
 docker kill fdg # kill the container
 docker rm fdg   # remove the container
 ```
+
+## Detailed Description
+
+### RQ2: IFL Performance
+
+The results for RQ2 show how the FL accuracy changes as new test cases are added to the test suite (Figure 5).
+In our artifact, the following command shows how the rank of the faulty method changes when selecting 10 test cases for `Lang-1b` using the fault diagnosability metric `FDG:0.5` from the newly generated test suite `newTS`.
+```shell
+docker exec fdg python3.6 main.py Lang 1 --tool evosuite --id newTS --budget 10 --selection FDG:0.5 --noise 0.0
+```
+
+Example output (please note that the output can be different based on the random seed used in the test generation phase):
+```
+* selection metric: FDG:0.5
+* subject: Lang-1b
+* test suite: evosuite-newTS (/root/results/evosuite_test/newTS/Lang-1)
+* 1 buggy methods:
+--- org.apache.commons.lang3.math.NumberUtils.createNumber(Ljava/lang/String;)
+* 1 failing tests
+--- org.apache.commons.lang3.math.NumberUtilsTest::TestLang747
+[] []
+* 38 lines collected
+* 112 lines collected
+* 0/32 generated tests are failed in fixed version
+                        value
+num_total_tests            33
+num_failing_tests           1
+num_lines                 112
+num_suspicious_lines       38
+num_total_methods          14
+num_suspicious_methods      5
+num_buggy_methods           1
+********************************************
+  Iter  Test                                                                                Fitness    Oracle   Response    Entropy    Momentum    Ranks
+------  --------------------------------------------------------------------------------  ---------  --------  ---------  ---------  ----------  -------
+     0  [('initial_test', 'org.apache.commons.lang3.math.NumberUtilsTest::TestLang747')]                                    1.60944                    5
+     1  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test27')                0.524161         1          1    1.59456         3          2
+     2  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test18')                0.526924         1          1    1.6044          0          2
+     3  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test19')                0.49969          1          1    1.60093         2          1
+     4  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test16')                0.533589         1          1    1.59332         0.5        1
+     5  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test23')                0.514621         1          1    1.5857          0          1
+     6  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test26')                0.504069         1          1    1.57733         0          1
+     7  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test24')                0.5004           1          1    1.56879         0          1
+     8  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test22')                0.497579         1          1    1.5603          0          1
+     9  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test21')                0.495339         1          1    1.55198         0          1
+    10  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test20')                0.493514         1          1    1.54388         0          1
+```
+You can see that the rank of the faulty method becomes higher (5 -> 1) as more test cases are added. Using this artifact, you can generate those results that support our findings in RQ2.
+
+### RQ3: Robustness
+
+To answer RQ3, we showed how much SBFL performance changes based on the different labelling error rates (Figure 6).
+You can control the error rate (or noise probability) of the simulated human responses using the
+`--noise <prop>` option of the `main.py` script. It will randomly flip the test oracle querying response
+with a probability of `<prob>`. 
+
+```shell
+# the noise probability is set to 0.3!
+docker exec fdg python3.6 main.py Lang 1 --tool evosuite --id newTS --budget 10 --selection FDG:0.5 --noise 0.3
+```
+
+```
+* selection metric: FDG:0.5
+* subject: Lang-1b
+* test suite: evosuite-newTS (/root/results/evosuite_test/newTS/Lang-1)
+* 1 buggy methods:
+--- org.apache.commons.lang3.math.NumberUtils.createNumber(Ljava/lang/String;)
+* 1 failing tests
+--- org.apache.commons.lang3.math.NumberUtilsTest::TestLang747
+[] []
+* 38 lines collected
+* 112 lines collected
+* 0/32 generated tests are failed in fixed version
+                        value
+num_total_tests            33
+num_failing_tests           1
+num_lines                 112
+num_suspicious_lines       38
+num_total_methods          14
+num_suspicious_methods      5
+num_buggy_methods           1
+********************************************
+  Iter  Test                                                                                Fitness    Oracle   Response    Entropy    Momentum    Ranks
+------  --------------------------------------------------------------------------------  ---------  --------  ---------  ---------  ----------  -------
+     0  [('initial_test', 'org.apache.commons.lang3.math.NumberUtilsTest::TestLang747')]                                    1.60944                    5
+     1  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test27')                0.524161         1          0    2.18224    3.66667         4
+     2  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test22')                0.610181         1          1    2.17603    1               4
+     3  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test26')                0.565125         1          1    2.16842    1.33333         6
+     4  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test21')                0.557515         1          0    2.17024    2.75            4
+     5  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test12')                0.570087         1          1    2.16923    0.666667        4
+     6  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test20')                0.554509         1          1    2.17178    3               1
+     7  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test23')                0.546811         1          0    2.14738    0.8             1
+     8  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test24')                0.553293         1          1    2.1485     1.64286         1
+     9  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test14')                0.54706          1          1    2.1488     0               1
+    10  ('org/apache/commons/lang3/math/NumberUtils_ESTest.java', 'test10')                0.541957         1          1    2.14849    0               1
+```
+Now, the simulated human responses (`Response` column) are sometimes incorrect.
+For example, in Iter 1, it simulates a wrong response answering that `test27` captures the incorrect behaviour of the program `Lang-1b` (`Reponse: 0`), even though the test case `test27` does not reveal any incorrect behaviour of the program (`Oracle: 1`). You can see that the rank of faulty elements becomes `1` after adding more test cases compared to the previous example.
+
+Using this artifact, you can simulate the error in the human labelling step (in Figure 3), and consequently evaluate the robustness of any fault diagnosability metric. 
+
+
+### RQ4: Parameter Tuning
+
+```shell
+docker exec fdg python3.6 main.py Lang 1 --tool evosuite --id newTS --budget 10 --selection FDG:<alpha> --noise 0.0
+```
+
+Our proposed fault diagnosability metric `FDG` has one parameter `alpha` that controls the relative weights of `Split` and `Cover` which are subcomponents of `FDG`.
+
+RQ4 concerns how `alpha` affects the performance of `FDG`.
+
+In this artifact, you can easily control the alpha value uing the `--selection` option of `main.py`, e.g., `--selection FDG:0.4` or `--selection FDG:0.8`. 
+
