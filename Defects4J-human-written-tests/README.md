@@ -71,4 +71,4 @@ The generated .json output file contains the information about how the ranks of 
 
 When we use only the initial failing test case `645` (FYI, this is the index of the test case in the columns of the input coverage matrix) for SBFL, the faulty method is ranked 5th place. When we select three more test cases 340, 213, 982 using the diagnosability metric `FDG` and add them to the test suite, the rank of the faulty method becomes 1.
 
-In our paper, Figure 2 and Table 2 shows how the ranks of the faulty method are changed depending on the choice of a fault diagnosability metric. Using the data in `output/,` you can reproduce the `mAP` and `acc@n` results in Figure 2 and Table 2.
+In our paper, Figure 2 and Table 2 shows how the ranks of the faulty method are changed depending on the choice of a fault diagnosability metric. **Using the script [`plot-RQ1.ipynb`](./plot-RQ1.ipynb), you can reproduce the `mAP` and `acc@n` results in Figure 2 and Table 2.**
