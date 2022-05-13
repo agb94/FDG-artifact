@@ -1,16 +1,5 @@
 # Prioritisation Simulation (RQ1)
 
-## Development Environment 
-- Python 3.9.1
-- Installing dependencies
-  ```shell
-  pip install -r requirements.txt
-  ```
-  - (OS X) If `libshm.dylib` is not loaded, please install `libomp`.
-    ```shell
-    brew install libomp
-    ```
-
 ## Precomputed Simulation Results
 
 The precomputed results are available in the directory `output/`.

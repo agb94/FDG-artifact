@@ -95,6 +95,18 @@ docker rm fdg   # remove the container
 ```
 
 ## Detailed Description
+Although we do not provide the entire raw experiment results due to storage issue, the precomputed fault localisation results are available in the directory [./output](./output). In the directory, each file path means `<time_budget>/<test_suite_id>/<diagnosability_metric>.pkl`.
+  
+**Using the precomputed data, you can reproduce RQ2-RQ4 results presented in our paper with the script [./plot-RQ2-RQ4.pkl](./plot-RQ2-RQ4.ipynb).**
+
+Note that the precomputed `.pkl` files were generated using [./summarize_FL_results.py](./summarize_FL_results.py). The script summarises the fault localisation results produced in **Step 3** into a Pandas Dataframe. For example,
+```shell
+python summarize_FL_results.py newTS 60 FDG:0.5 --output output.pkl
+```
+this command will summarise the fault localisation results obtained using the diagnosability metric `FDG:0.5` in `./docker/results/localisation/newTS/` and save the summary to `output.pkl`. If you have finished `Step 3` or `Step 4`, you can try this command.
+
+--- 
+If you want to replicate each experiment our paper, please refer to the following detailed descriptions for each research question:
 
 ### RQ2: IFL Performance
 

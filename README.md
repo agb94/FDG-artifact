@@ -5,6 +5,17 @@
 This is an artifact accompanying the paper **FDG: A Precise Measurement of
 Fault Diagnosability Gain of Test Cases** (ISSTA 2022).
 
+## Development Environment 
+- Python 3.9.1
+- Installing dependencies
+  ```shell
+  pip install -r requirements.txt
+  ```
+  - (OS X) If `libshm.dylib` is not loaded, please install `libomp`.
+    ```shell
+    brew install libomp
+    ```
+
 ### Package structure
 ```bash
 ├── Defects4J-human-written-tests/ # RQ1
