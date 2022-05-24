@@ -5,16 +5,20 @@
 This is an artifact accompanying the paper **FDG: A Precise Measurement of
 Fault Diagnosability Gain of Test Cases** (ISSTA 2022).
 
-## Development Environment 
-- Python 3.9.1
-- Installing dependencies
-  ```shell
-  pip install -r requirements.txt
-  ```
-  - (OS X) If `libshm.dylib` is not loaded, please install `libomp`.
-    ```shell
-    brew install libomp
-    ```
+## Requirements
+- H/W
+  - A processor with the linux/amd64 architecture (only for RQ2-4)
+- S/W
+  - 🐍 Python 3.9.1
+    - Installing dependencies
+      ```shell
+      pip install -r requirements.txt
+      ```
+      - (In OS X) If `libshm.dylib` is not loaded, please install `libomp`.
+        ```shell
+        brew install libomp
+        ```
+  - 🐳 docker (only for RQ2-4)
 
 ### Package structure
 ```bash
