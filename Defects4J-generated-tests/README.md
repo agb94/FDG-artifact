@@ -65,7 +65,7 @@ docker exec fdg python3.6 main.py <pid> <vid> --tool evosuite --id <test_suite_i
   - `<pid>-<vid>-summary.pkl` contains the basic information of each buggy subject
   - `<pid>-<vid>-oracle.pkl` contains the ground-truth oracle of the generated test cases
     - `0`: fault-revealing test, `1`: non fault-revealing test
-  - `<pid>-<vid>-oracle.pkl` records the 2-D coverage matrix of the generated test cases (columns: lines, index: test cases)
+  - `<pid>-<vid>-covmat.pkl` records the 2-D coverage matrix of the generated test cases (columns: lines, index: test cases)
     - `0`: not covered
     - `1`: covered
   - `<pid>-<vid>-ranks-<diagnosability_metric>.pkl` contains the FL scores/ranks of methods at each iteration when the test case is selected based on `<diagnosability_metric>`
