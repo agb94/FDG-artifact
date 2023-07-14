@@ -62,7 +62,7 @@ def loop(project, version, tool, ts_id, selection_metric_name,
   if not buggy_methods:
     raise EvalException("Omission Fault")
 
-  if os.path.exists(env.covmat_path) and os.path.exists(env.oravec_path):
+  if not new and os.path.exists(env.covmat_path) and os.path.exists(env.oravec_path):
     coverage_matrix = pd.read_pickle(env.covmat_path)
     oracle_vector = pd.read_pickle(env.oravec_path)
     if oracle_vector.iloc[0]["value"] in TestResult:
@@ -96,8 +96,7 @@ def loop(project, version, tool, ts_id, selection_metric_name,
               continue
             test_class, test_no = failing_test
             test_class = test_class.replace('.', '/') + '.java'
-            test_no = int(test_no[4:])
-            failing_at_fixed.append((test_class, str(test_no)))
+            failing_at_fixed.append((test_class, test_no))
       broken_at_fixed = []
       with open(env.broken_test_path, 'r', encoding='utf-8') as f:
         for l in f:
@@ -215,7 +214,7 @@ def loop(project, version, tool, ts_id, selection_metric_name,
   tests_path = tests_path.replace("tests", "tests-{}".format(selection_metric_name))
   method_ranks_path = method_ranks_path.replace("ranks", "ranks-{}".format(selection_metric_name))
 
-  if os.path.exists(tests_path) and os.path.exists(method_ranks_path):
+  if not new and os.path.exists(tests_path) and os.path.exists(method_ranks_path):
     tests = pd.read_pickle(tests_path)
     method_ranks = pd.read_pickle(method_ranks_path)
     if "oracle" not in tests.columns:
